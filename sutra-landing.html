@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUTRA SDK - Build on UTXO Blockchains with Elixir</title>
+    <meta name="description" content="SUTRA is a powerful Elixir SDK framework for building applications on UTXO-based blockchains like Cardano, Bitcoin, Midnight, and Midguard. Leverage the BEAM virtual machine for blockchain development.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom animations and styles */
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .backdrop-blur {
+            backdrop-filter: blur(12px);
+        }
+        
+        .grid-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .card-hover:hover {
+            transform: scale(1.05);
+            transition: all 0.3s ease;
+        }
+        
+        .code-block {
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl font-bold gradient-text">SUTRA</h1>
+                </div>
+                
+                <!-- Right side buttons -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-slate-300 hover:text-white hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                        <i class="fas fa-book mr-2"></i>
+                        Documentation
+                    </button>
+                    
+                    <button class="text-slate-300 hover:text-white hover:bg-slate-800 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                        <i class="fab fa-github mr-2"></i>
+                        GitHub
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
+        <!-- Background gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-transparent to-blue-600/20"></div>
+        
+        <!-- Blockchain logos background -->
+        <div class="absolute inset-0 overflow-hidden opacity-5">
+            <!-- Cardano logo -->
+            <div class="absolute top-20 left-10 w-32 h-32 text-white">
+                <svg viewBox="0 0 2000 2000" class="w-full h-full">
+                    <path fill="currentColor" d="M1000 0C447.715 0 0 447.715 0 1000s447.715 1000 1000 1000 1000-447.715 1000-1000S1552.285 0 1000 0zm-60.606 1649.393c-67.68 0-122.727-55.045-122.727-122.726 0-67.681 55.047-122.727 122.727-122.727 67.68 0 122.726 55.046 122.726 122.727 0 67.681-55.046 122.726-122.726 122.726zm121.212-242.424c-67.68 0-122.727-55.045-122.727-122.726 0-67.682 55.046-122.728 122.727-122.728 67.68 0 122.726 55.046 122.726 122.728 0 67.681-55.046 122.726-122.726 122.726zm-242.424 0c-67.681 0-122.727-55.045-122.727-122.726 0-67.682 55.046-122.728 122.727-122.728 67.68 0 122.726 55.046 122.726 122.728 0 67.681-55.046 122.726-122.726 122.726zm363.636-60.606c-33.84 0-61.363-27.523-61.363-61.364 0-33.84 27.523-61.363 61.363-61.363s61.364 27.523 61.364 61.363c0 33.841-27.524 61.364-61.364 61.364zm-484.848 0c-33.841 0-61.364-27.523-61.364-61.364 0-33.84 27.523-61.363 61.364-61.363s61.363 27.523 61.363 61.363c0 33.841-27.522 61.364-61.363 61.364z"/>
+                </svg>
+            </div>
+            
+            <!-- Bitcoin logo -->
+            <div class="absolute top-32 right-20 w-28 h-28 text-white">
+                <svg viewBox="0 0 32 32" class="w-full h-full">
+                    <path fill="currentColor" d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm7.189 17.297c.309-2.084-1.271-3.201-3.438-3.95l.701-2.817-1.713-.427-.683 2.745c-.45-.113-.914-.219-1.375-.324l.688-2.761-1.714-.428-.7 2.817c-.374-.086-.741-.17-1.097-.26l.002-.009-2.364-.591-.456 1.839s1.271.293 1.245.311c.694.174.82.635.799 1.001l-.8 3.209c.048.012.11.03.179.057l-.181-.045-1.123 4.506c-.085.21-.301.525-.788.406.017.025-1.245-.311-1.245-.311l-.851 1.969 2.234.557c.415.104.822.213 1.223.315l-.708 2.84 1.712.427.701-2.821c.464.126.914.243 1.356.355l-.699 2.807 1.714.427.708-2.838c2.924.553 5.124.33 6.05-2.309.746-2.128-.037-3.357-1.575-4.157 1.122-.259 1.966-1 2.19-2.527zm-3.918 5.49c-.531 2.131-4.115.979-5.277.73l.941-3.774c1.162.29 4.884.864 4.336 3.044zm.53-5.515c-.483 1.938-3.465.953-4.435.712l.854-3.424c.97.242 4.085.693 3.581 2.712z"/>
+                </svg>
+            </div>
+            
+            <!-- Midnight logo placeholder -->
+            <div class="absolute bottom-32 left-32 w-24 h-24 text-white">
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="4"/>
+                    <circle cx="50" cy="50" r="20" fill="currentColor"/>
+                    <path d="M30 30 L70 70 M70 30 L30 70" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+            
+            <!-- Midguard logo placeholder -->
+            <div class="absolute bottom-20 right-32 w-26 h-26 text-white">
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <polygon points="50,10 90,90 10,90" fill="none" stroke="currentColor" stroke-width="4"/>
+                    <circle cx="50" cy="60" r="15" fill="currentColor"/>
+                    <path d="M35 45 L65 45" stroke="currentColor" stroke-width="3"/>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Grid pattern overlay -->
+        <div class="absolute inset-0 opacity-20 grid-pattern"></div>
+        
+        <div class="relative max-w-4xl mx-auto text-center">
+            <div class="mb-6 inline-block bg-purple-600/10 text-purple-400 border border-purple-600/20 px-3 py-1 rounded-full text-sm">
+                Now Available for Elixir Developers
+            </div>
+            
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                Build on
+                <span class="gradient-text">UTXO</span>
+                <br>
+                Blockchains with
+                <span class="gradient-text">SUTRA</span>
+            </h1>
+            
+            <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                A powerful Elixir SDK framework for building applications on UTXO-based blockchains. 
+                Leverage the BEAM virtual machine to create robust, concurrent blockchain applications.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <button class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-lg rounded-lg font-medium flex items-center group">
+                    Get Started
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 text-sm text-slate-400">
+                <span class="flex items-center">
+                    <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                    Cardano Support
+                </span>
+                <span class="flex items-center">
+                    <div class="w-2 h-2 bg-orange-400 rounded-full mr-2"></div>
+                    Bitcoin Compatible
+                </span>
+                <span class="flex items-center">
+                    <div class="w-2 h-2 bg-purple-400 rounded-full mr-2"></div>
+                    Midnight Ready
+                </span>
+                <span class="flex items-center">
+                    <div class="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                    BEAM Powered
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">
+                    Everything you need to build on
+                    <span class="gradient-text">UTXO blockchains</span>
+                </h2>
+                <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                    SUTRA provides all the tools and abstractions needed to build robust blockchain applications with Elixir
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+                        <i class="fas fa-code text-white"></i>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Transaction Building</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Intuitive APIs for building complex UTXO transactions with Elixir's pattern matching and functional programming paradigms.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
+                        <i class="fas fa-flask text-white"></i>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">E2E Testing Framework</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Comprehensive testing tools for blockchain applications with built-in test scenarios and chain simulation capabilities.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-white"></i>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Code Generator</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Automated code generation for smart contracts, transaction builders, and API integrations to accelerate development.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center mb-4">
+                        <i class="fas fa-layer-group text-white"></i>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Phoenix LiveView Integration</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Seamless integration with Phoenix LiveView for building real-time blockchain applications with reactive UIs.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center mb-4">
+                        <i class="fas fa-microchip text-white"></i>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">BEAM Virtual Machine</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Harness the power of Erlang's BEAM VM for fault-tolerant, concurrent blockchain application development.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-teal-500 to-blue-500 flex items-center justify-center mb-4">
+                        <i class="fas fa-network-wired text-white"></i>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Multi-Chain Support</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        Unified API across multiple UTXO blockchains including Cardano, Bitcoin, Midnight, and Midguard.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blockchains Section -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 bg-slate-950/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">
+                    Supported
+                    <span class="gradient-text">Blockchains</span>
+                </h2>
+                <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                    Build applications across multiple UTXO-based blockchains with a unified API
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-2">Cardano</h3>
+                    <div class="mb-4 mx-auto block w-fit bg-green-600/20 text-green-400 border border-green-600/30 px-2 py-1 rounded-full text-xs">
+                        Production Ready
+                    </div>
+                    <p class="text-slate-300 text-sm text-center mb-4 leading-relaxed">
+                        Third-generation blockchain with peer-reviewed research foundation
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Smart Contracts</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Native Tokens</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Staking</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-orange-500 to-yellow-500 flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-2">Bitcoin</h3>
+                    <div class="mb-4 mx-auto block w-fit bg-blue-600/20 text-blue-400 border border-blue-600/30 px-2 py-1 rounded-full text-xs">
+                        Supported
+                    </div>
+                    <p class="text-slate-300 text-sm text-center mb-4 leading-relaxed">
+                        The original and most secure cryptocurrency network
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Lightning Network</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Taproot</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Multi-sig</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-moon text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-2">Midnight</h3>
+                    <div class="mb-4 mx-auto block w-fit bg-yellow-600/20 text-yellow-400 border border-yellow-600/30 px-2 py-1 rounded-full text-xs">
+                        Coming Soon
+                    </div>
+                    <p class="text-slate-300 text-sm text-center mb-4 leading-relaxed">
+                        Privacy-focused blockchain for confidential smart contracts
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Zero-Knowledge</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Privacy</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Compliance</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/50 border border-slate-700 hover:border-slate-600 rounded-lg p-6 card-hover backdrop-blur-sm">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-r from-green-500 to-teal-500 flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-mountain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white text-center mb-2">Midguard</h3>
+                    <div class="mb-4 mx-auto block w-fit bg-gray-600/20 text-gray-400 border border-gray-600/30 px-2 py-1 rounded-full text-xs">
+                        In Development
+                    </div>
+                    <p class="text-slate-300 text-sm text-center mb-4 leading-relaxed">
+                        High-performance blockchain for enterprise applications
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Enterprise</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Scalability</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full">Interop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example Section -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">
+                    Write blockchain code that
+                    <span class="gradient-text">feels natural</span>
+                </h2>
+                <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                    SUTRA brings Elixir's elegance to blockchain development with intuitive APIs and powerful abstractions
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Transaction Building Example -->
+                <div class="bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden backdrop-blur-sm">
+                    <div class="bg-slate-800/50 border-b border-slate-700 p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
+                                    <i class="fas fa-code text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-white font-bold">Transaction Building</h3>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-purple-600/20 text-purple-400 border border-purple-600/30 px-2 py-1 rounded text-xs">Elixir</span>
+                                <button class="text-slate-400 hover:text-white p-1">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <pre class="text-sm text-slate-300 code-block">defmodule MyApp.Transactions do
+  use Sutra.TransactionBuilder
+  
+  def send_ada(from_address, to_address, amount) do
+    build_transaction()
+    |> add_input(from_address, amount + fee())
+    |> add_output(to_address, amount)
+    |> add_change(from_address)
+    |> sign_transaction()
+    |> submit_to_network()
+  end
+  
+  def create_native_token(policy_id, asset_name, quantity) do
+    build_transaction()
+    |> add_minting_policy(policy_id)
+    |> mint_token(asset_name, quantity)
+    |> add_metadata(%{
+         "721" => %{
+           policy_id => %{
+             asset_name => %{
+               "name" => asset_name,
+               "image" => "ipfs://..."
+             }
+           }
+         }
+       })
+    |> submit_to_network()
+  end
+end</pre>
+                    </div>
+                </div>
+                
+                <!-- Testing Example -->
+                <div class="bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden backdrop-blur-sm">
+                    <div class="bg-slate-800/50 border-b border-slate-700 p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded bg-gradient-to-r from-green-500 to-teal-500 flex items-center justify-center">
+                                    <i class="fas fa-play text-white text-sm"></i>
+                                </div>
+                                <h3 class="text-white font-bold">E2E Testing</h3>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-green-600/20 text-green-400 border border-green-600/30 px-2 py-1 rounded text-xs">ExUnit</span>
+                                <button class="text-slate-400 hover:text-white p-1">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <pre class="text-sm text-slate-300 code-block">defmodule MyApp.TransactionTest do
+  use Sutra.TestCase
+  
+  test "send ADA transaction" do
+    # Setup test environment
+    {:ok, wallet} = create_test_wallet(1000_000_000)  # 1000 ADA
+    to_address = "addr_test1..."
+    
+    # Execute transaction
+    {:ok, tx_hash} = MyApp.Transactions.send_ada(
+      wallet.address, 
+      to_address, 
+      100_000_000  # 100 ADA
+    )
+    
+    # Verify results
+    assert_transaction_confirmed(tx_hash)
+    assert_balance(to_address, 100_000_000)
+    assert_balance(wallet.address, 900_000_000 - fee())
+  end
+end</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center space-x-4 bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-slate-300">Live on testnet</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                        <span class="text-slate-300">BEAM optimized</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-purple-400 rounded-full"></div>
+                        <span class="text-slate-300">Production ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- CTA Section -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">
+                    Ready to build on UTXO blockchains?
+                </h2>
+                <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                    Join the growing community of Elixir developers building the future of blockchain applications
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-medium">
+                        Get Started Today
+                    </button>
+                    <button class="border border-slate-600 text-slate-300 hover:bg-slate-800 px-8 py-4 rounded-lg font-medium">
+                        Join Discord Community
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Links Section -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="text-white font-semibold mb-4">SUTRA SDK</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Empowering Elixir developers to build on UTXO blockchains with the power of the BEAM virtual machine.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-4">Documentation</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Quick Start</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Examples</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-4">Blockchains</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Cardano</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Bitcoin</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Midnight</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Midguard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-4">Community</h4>
+                    <ul class="space-y-2 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Discord</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">GitHub</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Twitter</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
+                <div class="text-slate-400 text-sm mb-4 sm:mb-0">
+                    © 2024 SUTRA SDK. Built with ❤️ for the Elixir community.
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button class="text-slate-400 hover:text-white p-2">
+                        <i class="fab fa-github text-xl"></i>
+                    </button>
+                    <button class="text-slate-400 hover:text-white p-2">
+                        <i class="fas fa-book text-xl"></i>
+                    </button>
+                    <button class="text-slate-400 hover:text-white p-2">
+                        <i class="fas fa-comments text-xl"></i>
+                    </button>
+                    <button class="text-slate-400 hover:text-white p-2">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling and basic interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for smooth scrolling
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Add copy functionality to code blocks
+            const copyButtons = document.querySelectorAll('button:has(.fa-copy)');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.closest('.bg-slate-900\\/50').querySelector('pre');
+                    if (codeBlock) {
+                        navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                            // Show copied feedback
+                            const originalIcon = this.innerHTML;
+                            this.innerHTML = '<i class="fas fa-check"></i>';
+                            setTimeout(() => {
+                                this.innerHTML = originalIcon;
+                            }, 2000);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
