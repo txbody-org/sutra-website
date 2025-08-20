@@ -1,94 +1,154 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, Moon, Mountain } from "lucide-react";
 import { useSmoothScrollAnimation } from "@/hooks/useSmoothScrollAnimation";
 
 const Blockchains = () => {
   const { ref } = useSmoothScrollAnimation({
     threshold: 0.1,
-    rootMargin: '-50px 0px'
+    rootMargin: "-50px 0px",
   });
+
+  const ApexIcon = () => (
+    <svg
+      className="my-16"
+      width="100"
+      height="100"
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_2465_17035)">
+        <path
+          d="M46.457 87.8978L33.5163 74.9536L46.457 70.5892V87.8978ZM53.5378 12.0839L66.6568 25.1966L53.5476 29.5708L53.5378 12.0839ZM99.8143 48.8625C99.5896 48.1975 99.1727 47.6141 98.6164 47.1863C98.06 46.7585 97.3892 46.5055 96.689 46.4593C96.2245 46.4283 95.7584 46.488 95.3168 46.6351L53.5427 60.7223V37.0442L74.3406 30.1081L74.4261 30.0763C74.492 30.0495 74.5579 30.025 74.6238 29.9957L74.7606 29.9322C74.8192 29.9054 74.8753 29.8761 74.9339 29.8443L75.0853 29.7539L75.222 29.666L75.3881 29.5439L75.4955 29.4584C75.5517 29.4096 75.6103 29.3558 75.6664 29.3021L75.725 29.2508L75.7543 29.2191C75.8081 29.1653 75.8569 29.1092 75.9057 29.0506L75.9961 28.948L76.1059 28.7941C76.1401 28.7453 76.1719 28.7037 76.2036 28.6549L76.2793 28.5255C76.3037 28.4815 76.3476 28.4107 76.3769 28.3496C76.4062 28.2886 76.4136 28.2739 76.4307 28.2324C76.4478 28.1909 76.4917 28.1054 76.5161 28.0321C76.5405 27.9588 76.5479 27.9418 76.5625 27.8978C76.5772 27.8538 76.6065 27.7757 76.626 27.7146C76.6455 27.6536 76.6529 27.5998 76.6675 27.5437C76.6822 27.4875 76.6919 27.4411 76.7017 27.3898C76.7115 27.3385 76.7237 27.2481 76.731 27.1798C76.7383 27.1114 76.7432 27.0967 76.7456 27.0552C76.7436 26.9801 76.7477 26.9049 76.7578 26.8305V26.7157C76.7627 26.645 76.7627 26.574 76.7578 26.5032C76.7578 26.4348 76.7578 26.4104 76.7578 26.364C76.7578 26.3176 76.7432 26.2468 76.7334 26.1882C76.7237 26.1296 76.7139 26.0685 76.7017 26.0099C76.6895 25.9513 76.6797 25.9171 76.6675 25.8707C76.6553 25.8243 76.6333 25.729 76.6113 25.6582L76.5991 25.6167L76.5674 25.541C76.5433 25.468 76.5156 25.3963 76.4844 25.326C76.4526 25.2552 76.4453 25.243 76.4282 25.2015C76.4111 25.16 76.3672 25.0794 76.3354 25.0183L76.2353 24.8864C76.206 24.8351 76.1743 24.7863 76.1401 24.7375L76.0254 24.5811C75.9887 24.5323 75.9643 24.503 75.9326 24.4639C75.9008 24.4248 75.8373 24.3565 75.7885 24.3052L75.7275 24.2392L52.5318 1.03736C52.4513 0.956768 52.3658 0.881057 52.2755 0.793134L52.1461 0.697884L51.9996 0.587981C51.9459 0.553789 51.8946 0.524481 51.8409 0.495173L51.7017 0.409693L51.5186 0.338866C51.4649 0.314443 51.4209 0.29002 51.3696 0.270482C51.3184 0.250943 51.2622 0.228963 51.2085 0.209424L51.0302 0.150809L50.8642 0.10929L50.6933 0.0677709C50.6347 0.0555594 50.5639 0.0482325 50.4931 0.0384633C50.4223 0.0286941 50.3954 0.0213672 50.3466 0.0164826C50.1135 -0.00549419 49.8789 -0.00549419 49.6458 0.0164826C49.5957 0.0202181 49.5459 0.0275641 49.4969 0.0384633L49.2967 0.0677709L49.1282 0.10929L48.9622 0.150809L48.7986 0.209424L48.635 0.270482L48.4836 0.338866L48.3225 0.41702C48.2687 0.446328 48.2272 0.473193 48.1808 0.5025C48.1272 0.530705 48.075 0.561683 48.0246 0.595308C47.9733 0.6295 47.9245 0.668577 47.8732 0.705211L47.7462 0.800461C47.6559 0.876172 47.5729 0.951884 47.4899 1.04469C47.4081 1.12687 47.3306 1.21328 47.2579 1.30358C47.2237 1.34265 47.1944 1.38661 47.1627 1.42813C47.1309 1.46965 47.087 1.52827 47.0528 1.582L46.9576 1.73342L46.8721 1.87752C46.8428 1.93125 46.8208 1.98498 46.7964 2.03871C46.772 2.09244 46.7452 2.13884 46.7232 2.19501C46.7012 2.25119 46.6866 2.29759 46.667 2.34888C46.6475 2.40017 46.6255 2.46123 46.6084 2.51984C46.5913 2.57846 46.5791 2.6273 46.5669 2.67859C46.5486 2.73787 46.5339 2.79823 46.523 2.85932C46.523 2.92038 46.5034 2.97899 46.4961 3.03761C46.4888 3.09622 46.479 3.14507 46.4717 3.20124C46.4595 3.31115 46.457 3.42349 46.4546 3.53584V31.9374L2.42198 46.6327C1.62284 46.8982 0.944391 47.4398 0.508267 48.1604C0.0721428 48.8809 -0.0931367 49.7333 0.0420596 50.5647C0.177256 51.3961 0.604087 52.1521 1.24603 52.6972C1.88798 53.2424 2.70305 53.541 3.54514 53.5395C3.92541 53.5401 4.30319 53.4782 4.66341 53.3563L46.4619 39.4084V63.1109L25.8422 70.0641L25.7861 70.0861L25.5419 70.1813L25.4442 70.2277C25.3755 70.2596 25.3086 70.2955 25.244 70.3352L25.1268 70.4036C25.0707 70.4378 25.0121 70.4744 24.9559 70.5159L24.8241 70.6136C24.7752 70.6478 24.7313 70.6845 24.6849 70.7235C24.6385 70.7626 24.5921 70.8041 24.5457 70.8481L24.4725 70.9165C24.4566 70.9316 24.4419 70.9479 24.4285 70.9653C24.3862 71.0078 24.3462 71.0527 24.3089 71.0996L24.1892 71.2364L24.1062 71.3536C24.0647 71.4098 24.0232 71.4684 23.9841 71.5295L23.9304 71.6199C23.8876 71.6885 23.8484 71.7594 23.8132 71.8323L23.7766 71.9105C23.74 71.9862 23.7034 72.0644 23.6741 72.1425C23.6741 72.1743 23.6545 72.2036 23.6423 72.2329C23.6155 72.3086 23.591 72.3843 23.5691 72.4625C23.5691 72.5015 23.5471 72.5455 23.5373 72.587C23.5276 72.6285 23.5031 72.7189 23.4909 72.7873C23.4787 72.8557 23.4763 72.8996 23.469 72.9558C23.4616 73.012 23.4519 73.0633 23.447 73.1194C23.4421 73.1756 23.447 73.2464 23.447 73.3099V73.647C23.4406 73.7005 23.4406 73.7546 23.447 73.8082C23.4592 73.8619 23.4641 73.9181 23.4714 73.9718C23.4787 74.0255 23.4909 74.0964 23.5031 74.1721C23.5112 74.2176 23.5227 74.2625 23.5373 74.3064C23.5373 74.3528 23.5764 74.4505 23.5984 74.5189C23.5973 74.5276 23.5981 74.5364 23.6006 74.5448C23.6031 74.5532 23.6073 74.561 23.613 74.5677C23.6267 74.5986 23.6382 74.6304 23.6472 74.663L23.7034 74.8095C23.7229 74.8584 23.762 74.9365 23.7913 75.0098L23.8376 75.1026C23.8865 75.1978 23.9426 75.2882 23.9988 75.3761L24.0427 75.4396C24.0916 75.5129 24.1429 75.5813 24.1966 75.6521L24.2454 75.7107C24.3089 75.7864 24.3748 75.8597 24.4456 75.9305L24.4651 75.9501L24.4896 75.9769L24.5115 75.9965L47.4776 98.9663C47.555 99.047 47.6365 99.1236 47.7218 99.1959L47.8488 99.2936C47.8927 99.3253 47.9489 99.3693 48.0002 99.4035L48.1564 99.4987C48.202 99.5291 48.2493 99.5568 48.298 99.5818C48.3469 99.6086 48.4055 99.6355 48.4592 99.6599L48.6106 99.7307L48.7717 99.7894C48.8254 99.8064 48.8816 99.8309 48.9377 99.848C48.9939 99.8651 49.0452 99.8748 49.0989 99.8895L49.2747 99.9334C49.3357 99.9457 49.3992 99.9505 49.4627 99.9603L49.6165 99.9823C49.7334 99.9941 49.8507 99.9998 49.9681 99.9994C50.0847 99.9998 50.2013 99.9941 50.3173 99.9823C50.3698 99.9786 50.422 99.9712 50.4735 99.9603C50.5248 99.9603 50.5981 99.9457 50.6591 99.9334C50.7201 99.9212 50.7763 99.9041 50.8325 99.8895C50.8886 99.8748 50.9423 99.8651 50.9961 99.848C51.0498 99.8309 51.1084 99.8089 51.1645 99.7894L51.3232 99.7307L51.4746 99.6599C51.5283 99.6355 51.5845 99.6111 51.6382 99.5818C51.6919 99.5525 51.731 99.5256 51.7798 99.4987L51.9361 99.4035L52.085 99.2936L52.2144 99.1959C52.2998 99.1236 52.3813 99.047 52.4586 98.9663C52.5446 98.8844 52.6261 98.798 52.7028 98.7074C52.7369 98.6683 52.7663 98.6244 52.798 98.5853L52.9103 98.4314C52.9469 98.3777 52.9713 98.3289 53.0031 98.2751C53.0348 98.2214 53.0617 98.1823 53.0885 98.131L53.1667 97.9723C53.1911 97.9185 53.2155 97.8721 53.2375 97.8184C53.2595 97.7647 53.2766 97.7134 53.2936 97.6621C53.3107 97.6108 53.3352 97.5473 53.3547 97.4911C53.3742 97.435 53.3815 97.3861 53.3937 97.3324C53.406 97.2787 53.4255 97.2152 53.4377 97.1541C53.4499 97.0931 53.4572 97.032 53.4646 96.9709C53.4719 96.9099 53.4841 96.8659 53.489 96.8122C53.489 96.6998 53.5061 96.5875 53.5061 96.4752V68.2031L97.546 53.3539C97.9885 53.2067 98.3976 52.9735 98.7497 52.6676C99.103 52.3632 99.3919 51.9912 99.5994 51.5734C99.8072 51.1563 99.9308 50.7024 99.9632 50.2375C100.006 49.7738 99.9549 49.3064 99.8143 48.8625Z"
+          fill="#F7F7F8"
+        ></path>
+      </g>
+      <defs>
+        <clipPath id="clip0_2465_17035">
+          <rect width="100" height="100" fill="white"></rect>
+        </clipPath>
+      </defs>
+    </svg>
+  );
+
+  const MidguardIcon = () => (
+    <img
+      src="https://pbs.twimg.com/profile_images/1860687097209692160/B3sFGqf8_400x400.jpg"
+      alt="Midguard Icon"
+      className=""
+    />
+  );
+
+  const HydraIcon = () => (
+    <img
+      src="https://hydra.family/head-protocol/img/hydra.png"
+      alt="Hydra Icon"
+      className=""
+    />
+  );
+
+  const CardanoIcon = () => (
+    <img
+      src="https://cardano.org/img/brand-assets/cardano-starburst-black.svg"
+      alt="Cardano Icon"
+      className=""
+    />
+  );
 
   const blockchains = [
     {
       name: "Cardano",
-      icon: Shield,
-      description: "Third-generation blockchain with peer-reviewed research foundation",
-      status: "Production Ready",
+      icon: CardanoIcon,
+      description:
+        "Third-generation blockchain with peer-reviewed research foundation",
+      status: "In Development",
       color: "from-blue-500 to-cyan-500",
-      features: ["Smart Contracts", "Native Tokens", "Staking"]
+      features: ["Smart Contracts", "Plutus", "Aiken"],
     },
     {
-      name: "Bitcoin",
-      icon: Zap,
-      description: "The original and most secure cryptocurrency network",
-      status: "Supported",
+      name: "Hydra",
+      icon: HydraIcon,
+      description: "Layer 2 scaling solution for Cardano",
+      status: "Planned",
       color: "from-orange-500 to-yellow-500",
-      features: ["Lightning Network", "Taproot", "Multi-sig"]
+      features: ["Low latency", "High throughput"],
     },
     {
-      name: "Midnight",
-      icon: Moon,
-      description: "Privacy-focused blockchain for confidential smart contracts",
-      status: "Coming Soon",
+      name: "Apex Fusion",
+      icon: ApexIcon,
+      description: "EVM + UTXO compatibility forged by Fusion",
+      status: "Planned",
       color: "from-purple-500 to-indigo-500",
-      features: ["Zero-Knowledge", "Privacy", "Compliance"]
+      features: ["Prime L1", "Vector L2"],
     },
     {
       name: "Midguard",
-      icon: Mountain,
-      description: "High-performance blockchain for enterprise applications",
-      status: "In Development",
+      icon: MidguardIcon,
+      description: "optimistic rollup designed for Cardano",
+      status: "Planned",
       color: "from-green-500 to-teal-500",
-      features: ["Enterprise", "Scalability", "Interop"]
-    }
+      features: ["Cardano L2", "Optimistic Rollup"],
+    },
   ];
 
   return (
-    <section ref={ref} className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-slate-950/50">
+    <section
+      ref={ref}
+      className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-slate-950/50"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">
             Supported
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"> Blockchains</span>
+            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              {" "}
+              Blockchains
+            </span>
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
-            Build applications across multiple UTXO-based blockchains with a unified API
+            Build applications across multiple UTXO-based blockchains with a
+            unified API
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {blockchains.map((blockchain, index) => (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className="animate-on-scroll fade-up card-enhanced card-blockchain"
             >
               <CardContent className="p-6">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${blockchain.color} flex items-center justify-center mb-4 mx-auto card-icon-enhanced`}>
+                <div
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-r ${blockchain.color} flex items-center justify-center mb-4 mx-auto card-icon-enhanced`}
+                >
                   <blockchain.icon className="h-6 w-6 text-white" />
                 </div>
-                
-                <h3 className="text-base sm:text-lg font-bold text-white text-center mb-2">{blockchain.name}</h3>
-                
-                <Badge 
+
+                <h3 className="text-base sm:text-lg font-bold text-white text-center mb-2">
+                  {blockchain.name}
+                </h3>
+
+                <Badge
                   className={`mb-4 mx-auto block w-fit ${
-                    blockchain.status === 'Production Ready' ? 'bg-green-600/20 text-green-400 border-green-600/30 animate-status-pulse' :
-                    blockchain.status === 'Supported' ? 'bg-blue-600/20 text-blue-400 border-blue-600/30' :
-                    blockchain.status === 'Coming Soon' ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30 animate-status-pulse' :
-                    'bg-gray-600/20 text-gray-400 border-gray-600/30'
+                    blockchain.status === "In Development"
+                      ? "bg-green-600/20 text-green-400 border-green-600/30 animate-status-pulse"
+                      : blockchain.status === "Planned"
+                        ? "bg-blue-600/20 text-blue-400 border-blue-600/30"
+                        : blockchain.status === "Coming Soon"
+                          ? "bg-yellow-600/20 text-yellow-400 border-yellow-600/30 animate-status-pulse"
+                          : "bg-gray-600/20 text-gray-400 border-gray-600/30"
                   }`}
                 >
                   {blockchain.status}
                 </Badge>
-                
+
                 <p className="text-slate-300 text-sm text-center mb-4 leading-relaxed card-content-fade">
                   {blockchain.description}
                 </p>
-                
+
                 <div className="flex flex-wrap gap-2 justify-center">
                   {blockchain.features.map((feature, featureIndex) => (
-                    <span 
+                    <span
                       key={featureIndex}
                       className="text-xs px-2 py-1 bg-slate-800 text-slate-300 rounded-full"
                     >
