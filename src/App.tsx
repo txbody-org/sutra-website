@@ -15,7 +15,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <ScrollToTop />
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
