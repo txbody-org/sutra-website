@@ -1,0 +1,262 @@
+/**
+ * SUTRA SDK Custom Prism.js Theme
+ * Designed to match the website's sophisticated design system
+ * Colors extracted from the existing purple/blue gradient palette
+ */
+
+/* Base code block styling */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f1f5f9; /* slate-100 - primary text */
+  background: transparent;
+  text-shadow: none;
+  font-family: 'JetBrainsMono Nerd Font', 'JetBrains Mono', 'Courier New', monospace;
+  font-size: inherit;
+  line-height: 1.6;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 2;
+  hyphens: none;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "zero" 1;
+}
+
+/* Selection styling */
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection {
+  background: rgba(168, 85, 247, 0.3); /* purple-500 with opacity */
+  text-shadow: none;
+}
+
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection {
+  background: rgba(168, 85, 247, 0.3); /* purple-500 with opacity */
+  text-shadow: none;
+}
+
+/* Container styling */
+pre[class*="language-"] {
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  background: transparent;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  white-space: normal;
+}
+
+/* Syntax highlighting tokens */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #64748b; /* slate-500 - muted comments */
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.token.punctuation {
+  color: #e2e8f0; /* slate-200 - readable neutral */
+}
+
+.token.namespace {
+  opacity: 0.8;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #10b981; /* emerald-500 - success green for literals */
+  font-weight: 500;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #06b6d4; /* cyan-500 - complementary blue for strings */
+  font-weight: 400;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #8b5cf6; /* violet-500 - tertiary accent for operators */
+  background: none;
+  font-weight: 500;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #a855f7; /* purple-500 - primary accent for keywords */
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #3b82f6; /* blue-500 - secondary accent for functions */
+  font-weight: 500;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #f59e0b; /* amber-500 - attention color for variables */
+  font-weight: 500;
+}
+
+/* Elixir-specific tokens */
+.token.atom {
+  color: #f97316; /* orange-500 - distinct color for atoms */
+  font-weight: 500;
+}
+
+.token.module {
+  color: #06b6d4; /* cyan-500 - module names */
+  font-weight: 600;
+}
+
+.token.attribute {
+  color: #8b5cf6; /* violet-500 - attributes */
+  font-weight: 500;
+}
+
+/* Pipe operator special styling */
+.token.operator.pipe {
+  color: #a855f7; /* purple-500 - emphasize Elixir pipes */
+  font-weight: 700;
+}
+
+/* Enhanced highlighting for specific patterns */
+.token.keyword.def {
+  color: #a855f7; /* purple-500 - function definitions */
+  font-weight: 700;
+}
+
+.token.keyword.test {
+  color: #10b981; /* emerald-500 - test keywords */
+  font-weight: 700;
+}
+
+/* Important tokens */
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+/* Line highlighting support */
+.highlight-line {
+  background: rgba(168, 85, 247, 0.1);
+  border-left: 3px solid #a855f7;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+  display: block;
+}
+
+/* Line numbers support */
+.line-numbers .line-numbers-rows {
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
+  padding-right: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.line-numbers-rows > span {
+  color: #64748b; /* slate-500 - muted line numbers */
+  font-size: 0.875rem;
+}
+
+.line-numbers-rows > span:before {
+  color: #64748b;
+  opacity: 0.6;
+}
+
+/* Copy button integration */
+.code-container {
+  position: relative;
+}
+
+.code-container .copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.code-container:hover .copy-button {
+  opacity: 1;
+}
+
+/* Enhanced focus and accessibility */
+pre[class*="language-"]:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+  
+  .highlight-line {
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .token.keyword {
+    color: #c084fc; /* purple-400 - higher contrast */
+  }
+  
+  .token.string {
+    color: #22d3ee; /* cyan-400 - higher contrast */
+  }
+  
+  .token.function {
+    color: #60a5fa; /* blue-400 - higher contrast */
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    transition: none;
+  }
+  
+  .code-container .copy-button {
+    transition: none;
+  }
+}

@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Github, BookOpen } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 
@@ -40,25 +40,39 @@ const Navigation = () => {
           
           {/* Right side buttons */}
           <div className="flex items-center space-x-2 sm:space-x-3">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="group text-slate-300 hover:text-white hover:bg-white/8 transition-all duration-300 border border-transparent hover:border-purple-400/30 hover:shadow-sm hover:shadow-purple-500/20 p-2 sm:px-3"
-              title="Documentation"
+            <a 
+              href="https://projectcatalyst.io/proposers/TxBody" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block"
             >
-              <BookOpen className="h-4 w-4 sm:mr-2 transition-transform duration-300 group-hover:scale-110" />
-              <span className="hidden sm:inline">Documentation</span>
-            </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="group text-slate-300 hover:text-white hover:bg-white/8 transition-all duration-300 border border-transparent hover:border-purple-400/30 hover:shadow-sm hover:shadow-purple-500/20 p-2 sm:px-3"
+                title="Fund 14 Proposals"
+              >
+                <ExternalLink className="h-4 w-4 sm:mr-2 transition-transform duration-300 group-hover:scale-110" />
+                <span className="hidden sm:inline">Fund 14 Proposals</span>
+              </Button>
+            </a>
             
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="group text-slate-300 hover:text-white hover:bg-white/8 transition-all duration-300 border border-transparent hover:border-purple-400/30 hover:shadow-sm hover:shadow-purple-500/20 p-2 sm:px-3"
-              title="GitHub"
+            <a 
+              href="https://github.com/txbody-org/sutra-cardano" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block"
             >
-              <Github className="h-4 w-4 sm:mr-2 transition-transform duration-300 group-hover:scale-110" />
-              <span className="hidden sm:inline">GitHub</span>
-            </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="group text-slate-300 hover:text-white hover:bg-white/8 transition-all duration-300 border border-transparent hover:border-purple-400/30 hover:shadow-sm hover:shadow-purple-500/20 p-2 sm:px-3"
+                title="GitHub"
+              >
+                <Github className="h-4 w-4 sm:mr-2 transition-transform duration-300 group-hover:scale-110" />
+                <span className="hidden sm:inline">GitHub</span>
+              </Button>
+            </a>
           </div>
         </div>
       </div>
