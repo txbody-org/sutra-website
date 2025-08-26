@@ -96,10 +96,10 @@ const Hero = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-md"></div>
               </Button>
             </a>
-            <Button
+            {/** <Button
               variant="glass"
               size="lg"
-              className="group relative font-medium tracking-wide min-w-[130px] sm:min-w-[160px] btn-glass-enhanced hover:bg-white/15 transition-all duration-500 btn-mobile-optimized btn-accessible-focus glass xl:text-base"
+              className="group relative font-medium tracking-wide min-w-[130px] sm:min-w-[160px] btn-glass-enhanced hover:bg-white/15 transition-all duration-500 btn-mobile-optimized btn-accessible-focus glass xl:text-base "
             >
               <svg
                 className="relative z-10 mr-2 h-5 w-5 xl:w-6 xl:h-6 group-hover:scale-110 group-hover:text-blue-300 transition-all duration-300"
@@ -113,7 +113,7 @@ const Hero = () => {
                 />
               </svg>
               <span className="relative z-10">Watch Demo</span>
-            </Button>
+            </Button> **/}
           </div>
 
           <div
