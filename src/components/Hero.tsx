@@ -1,179 +1,156 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Zap, Shield, Layers, Cpu, Globe } from "lucide-react";
+import { ArrowRight, BookOpen, Github, Copy, Check } from "lucide-react";
 import Navigation from "./Navigation";
-import GeometricBackground from "./GeometricBackground";
+import PrismCode from "@/components/PrismCode";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { LINKS, INSTALL_SNIPPET } from "@/lib/links";
+
+const heroSnippet = `defmodule Payments do
+  import Sutra.Cardano.Transaction.TxBuilder
+
+  def send_ada(from, to, lovelace) do
+    new_tx()
+    |> use_provider(:blockfrost)
+    |> pay_to_address(to, %{lovelace: lovelace})
+    |> build_tx!(wallet_address: [from])
+    |> sign_tx([from])
+    |> submit_tx()
+  end
+end`;
+
+const PROVIDERS = ["Blockfrost", "Maestro", "Koios", "Ogmios", "Yaci DevKit"];
 
 const Hero = () => {
+  const { copied, copyToClipboard } = useCopyToClipboard();
+
   return (
     <>
       <Navigation />
-      <section className="relative min-h-[100dvh] flex items-center justify-center px-3 sm:px-6 lg:px-8 pt-20 pb-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 z-0" />
+      <section
+        id="top"
+        className="editorial-bg relative min-h-[100dvh] flex items-center px-4 sm:px-6 lg:px-8 pt-28 pb-16 overflow-hidden"
+      >
+        <div className="grid-overlay absolute inset-0 z-0" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#07060d] z-[1]" />
 
-        <div
-          className="absolute inset-0 z-[1]"
-          style={{
-            background: `
-              radial-gradient(circle at 15% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 45%),
-              radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
-              radial-gradient(circle at 45% 10%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-              radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.06) 0%, transparent 35%)
-            `,
-            willChange: "transform",
-          }}
-        />
-
-        <div
-          className="absolute inset-0 z-[2]"
-          style={{
-            background: `
-              radial-gradient(ellipse at 30% 40%, rgba(168, 85, 247, 0.02) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 60%, rgba(59, 130, 246, 0.02) 0%, transparent 60%)
-            `,
-            animation: "glow-pulse 12s ease-in-out infinite alternate",
-          }}
-        />
-
-        <div className="geometric-bg absolute inset-0 z-10">
-          <GeometricBackground />
-        </div>
-
-        <div
-          className="absolute inset-0 opacity-[0.008] z-[5]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='0.3' opacity='0.4'%3E%3Cpath d='M30,5 L45,15 L45,35 L30,45 L15,35 L15,15 Z'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%23ffffff'/%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-
-        <div className="absolute inset-0 z-[8] pointer-events-none">
-          <div className="absolute top-1/4 right-1/3 w-0.5 h-0.5 bg-purple-400/20 rounded-full animate-float-slow" />
-          <div
-            className="absolute bottom-1/3 left-1/4 w-1 h-1 bg-blue-400/15 rounded-full animate-float-medium"
-            style={{ animationDelay: "3s" }}
-          />
-        </div>
-
-        <div className="absolute inset-0 z-15 bg-gradient-to-br from-slate-950/10 via-transparent to-slate-950/10"></div>
-
-        <div className="relative max-w-xs sm:max-w-4xl xl:max-w-6xl mx-auto text-center z-20">
-          <Badge
-            className="mb-6 sm:mb-8 bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-purple-300 border border-purple-400/30 hover:border-purple-400/50 transition-all duration-300 font-medium tracking-wide text-sm xl:text-base px-4 py-2 backdrop-blur-sm shadow-lg hover:shadow-purple-500/20 group relative animate-scale-in opacity-0"
-            style={{ animationDelay: "0.2s" }}
-          >
-            <Zap className="mr-2 h-4 w-4 xl:w-5 xl:h-5 text-yellow-400 group-hover:scale-110 transition-transform" />
-            Elixir SDK for Cardano
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-          </Badge>
-
-          <p
-            className="text-xs sm:text-sm md:text-lg lg:text-xl xl:text-3xl text-slate-300 mb-6 sm:mb-8 md:mb-10 max-w-sm sm:max-w-3xl xl:max-w-4xl mx-auto leading-relaxed font-body font-normal tracking-wide animate-slide-up opacity-0"
-            style={{ animationDelay: "0.6s" }}
-          >
-            A powerful Elixir SDK framework for building applications on
-            Cardano. Leverage the BEAM virtual machine to create robust,
-            concurrent blockchain applications.
-          </p>
-
-          <div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center items-center mb-8 sm:mb-10 md:mb-12 animate-scale-in opacity-0"
-            style={{ animationDelay: "0.8s" }}
-          >
-            <a
-              href="https://projectcatalyst.io/proposers/TxBody"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block"
+        <div className="relative z-10 max-w-6xl mx-auto w-full grid lg:grid-cols-[1.05fr_1fr] gap-12 lg:gap-14 items-center">
+          {/* Left: copy */}
+          <div>
+            <div
+              className="rise inline-flex items-center gap-2 rounded-full border border-purple-400/25 bg-purple-500/10 px-3.5 py-1.5 backdrop-blur-sm"
+              style={{ animationDelay: "0.05s" }}
             >
-              <Button
-                variant="premium"
-                size="lg"
-                className="group relative font-bold tracking-wide min-w-[150px] sm:min-w-[180px] transition-all duration-500 btn-mobile-optimized btn-accessible-focus xl:text-base"
-              >
-                <span className="relative z-10">Fund 14 Proposals</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-status-pulse" />
+              <span className="eyebrow text-purple-200/90">
+                Elixir&nbsp;·&nbsp;Cardano
+              </span>
+            </div>
 
-                <ArrowRight className="relative z-10 ml-2 h-5 w-5 xl:w-6 xl:h-6 group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-md"></div>
-              </Button>
-            </a>
-            {/** <Button
-              variant="glass"
-              size="lg"
-              className="group relative font-medium tracking-wide min-w-[130px] sm:min-w-[160px] btn-glass-enhanced hover:bg-white/15 transition-all duration-500 btn-mobile-optimized btn-accessible-focus glass xl:text-base "
+            <h1
+              className="rise mt-6 font-display font-extrabold tracking-tight text-white text-4xl sm:text-5xl xl:text-6xl leading-[1.05]"
+              style={{ animationDelay: "0.15s" }}
             >
-              <svg
-                className="relative z-10 mr-2 h-5 w-5 xl:w-6 xl:h-6 group-hover:scale-110 group-hover:text-blue-300 transition-all duration-300"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span className="relative z-10">Watch Demo</span>
-            </Button> **/}
-          </div>
+              Build Cardano
+              <br className="hidden sm:block" /> transactions in{" "}
+              <span className="brand-text">Elixir</span>.
+            </h1>
 
-          <div
-            className="mb-5 sm:mb-6 md:mb-8 animate-slide-up opacity-0 invisible"
-            style={{ animationDelay: "1.0s" }}
-          >
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-center">
-              <div className="flex flex-col items-center">
-                <div className="text-lg sm:text-xl font-bold text-white mb-1">
-                  <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                    90%
+            <p
+              className="rise mt-6 text-base sm:text-lg text-slate-400 max-w-xl leading-relaxed font-body"
+              style={{ animationDelay: "0.25s" }}
+            >
+              Sutra is an offchain transaction builder framework for Cardano.
+              Compose transactions with a fluent pipeline, plug in any provider,
+              and test end-to-end on a local network — all on the BEAM.
+            </p>
+
+            {/* Install snippet */}
+            <div
+              className="rise mt-8 flex items-center gap-3 rounded-xl surface px-4 py-3 max-w-md font-mono text-sm"
+              style={{ animationDelay: "0.35s" }}
+            >
+              <span className="text-purple-400 select-none">def&nbsp;deps&nbsp;→</span>
+              <code className="text-slate-200 flex-1 truncate">
+                {INSTALL_SNIPPET}
+              </code>
+              <button
+                onClick={() => copyToClipboard(INSTALL_SNIPPET)}
+                className="shrink-0 text-slate-400 hover:text-white transition-colors brand-ring rounded p-1"
+                aria-label="Copy install snippet"
+              >
+                {copied ? (
+                  <Check className="h-4 w-4 text-green-400" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+
+            {/* CTAs */}
+            <div
+              className="rise mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4"
+              style={{ animationDelay: "0.45s" }}
+            >
+              <a href={LINKS.docs} target="_blank" rel="noopener noreferrer">
+                <Button
+                  size="lg"
+                  className="group w-full sm:w-auto brand-bg text-white font-semibold border-0 shadow-lg shadow-purple-900/40 hover:brightness-110 hover:shadow-purple-800/60 transition-all duration-300 brand-ring px-7"
+                >
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Read the docs
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </Button>
+              </a>
+              <a href={LINKS.github} target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="group w-full sm:w-auto border-white/15 bg-white/5 text-slate-200 hover:bg-white/10 hover:text-white transition-all duration-300 brand-ring px-7"
+                >
+                  <Github className="mr-2 h-5 w-5" />
+                  View on GitHub
+                </Button>
+              </a>
+            </div>
+
+            {/* Provider trust row */}
+            <div
+              className="rise mt-10"
+              style={{ animationDelay: "0.55s" }}
+            >
+              <p className="eyebrow text-slate-500 mb-3">Works with</p>
+              <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-400 font-medium">
+                {PROVIDERS.map((p) => (
+                  <span key={p} className="flex items-center gap-2">
+                    <span className="h-1 w-1 rounded-full bg-slate-600" />
+                    {p}
                   </span>
-                </div>
-                <div className="text-xs sm:text-sm xl:text-base text-slate-400 font-medium">
-                  Less Boilerplate Code
-                </div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="text-lg sm:text-xl font-bold text-white mb-1">
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    5-Min
-                  </span>
-                </div>
-                <div className="text-xs sm:text-sm xl:text-base text-slate-400 font-medium">
-                  Setup to First TX
-                </div>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="text-lg sm:text-xl font-bold text-white mb-1">
-                  <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    100+
-                  </span>
-                </div>
-                <div className="text-xs sm:text-sm xl:text-base text-slate-400 font-medium">
-                  Pre-built Functions
-                </div>
+                ))}
               </div>
             </div>
           </div>
 
+          {/* Right: code panel */}
           <div
-            className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-6 text-xs sm:text-sm text-slate-300 font-medium animate-slide-up opacity-0"
-            style={{ animationDelay: "1.2s" }}
+            className="rise relative"
+            style={{ animationDelay: "0.35s" }}
           >
-            <span className="flex items-center bg-slate-800/30 px-2 sm:px-3 py-2 xl:px-4 rounded-full border border-green-400/20 hover:border-green-400/40 transition-colors group text-xs sm:text-sm xl:text-base">
-              <Layers className="w-3 sm:w-4 h-3 sm:h-4 xl:w-5 xl:h-5 text-green-400 mr-1 sm:mr-2 group-hover:scale-110 transition-transform" />
-              Real Time Application
-            </span>
-            <span className="flex items-center bg-slate-800/30 px-2 sm:px-3 py-2 xl:px-4 rounded-full border border-orange-400/20 hover:border-orange-400/40 transition-colors group text-xs sm:text-sm xl:text-base">
-              <Globe className="w-3 sm:w-4 h-3 sm:h-4 xl:w-5 xl:h-5 text-orange-400 mr-1 sm:mr-2 group-hover:scale-110 transition-transform" />
-              Blueprint Integration
-            </span>
-            <span className="flex items-center bg-slate-800/30 px-2 sm:px-3 py-2 xl:px-4 rounded-full border border-purple-400/20 hover:border-purple-400/40 transition-colors group text-xs sm:text-sm xl:text-base">
-              <Shield className="w-3 sm:w-4 h-3 sm:h-4 xl:w-5 xl:h-5 text-purple-400 mr-1 sm:mr-2 group-hover:scale-110 transition-transform" />
-              E2E Testing Included
-            </span>
-            <span className="flex items-center bg-slate-800/30 px-2 sm:px-3 py-2 xl:px-4 rounded-full border border-blue-400/20 hover:border-blue-400/40 transition-colors group touch-target-min text-xs sm:text-sm xl:text-base">
-              <Cpu className="w-3 sm:w-4 h-3 sm:h-4 xl:w-5 xl:h-5 text-blue-400 mr-1 sm:mr-2 group-hover:scale-110 transition-transform" />
-              Built on BEAM VM
-            </span>
+            <div className="absolute -inset-4 brand-bg opacity-20 blur-3xl rounded-full" />
+            <div className="relative surface rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/[0.03]">
+                <span className="h-3 w-3 rounded-full bg-red-400/70" />
+                <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
+                <span className="h-3 w-3 rounded-full bg-green-400/70" />
+                <span className="ml-2 font-mono text-xs text-slate-500">
+                  payments.ex
+                </span>
+              </div>
+              <div className="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm">
+                <PrismCode language="elixir" showLineNumbers>
+                  {heroSnippet}
+                </PrismCode>
+              </div>
+            </div>
           </div>
         </div>
       </section>

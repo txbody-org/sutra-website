@@ -4,6 +4,153 @@
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
+/* ------------------------------------------------------------------ */
+/* SUTRA brand system — Elixir purple × Cardano blue, editorial dark   */
+/* ------------------------------------------------------------------ */
+:root {
+	/* Elixir purple family */
+	--elixir-500: #a855f7;
+	--elixir-600: #8b5cf6;
+	--elixir-700: #7c3aed;
+	/* Cardano blue family */
+	--cardano-500: #3b82f6;
+	--cardano-600: #2563eb;
+	--cardano-700: #0b3fd4;
+	/* Editorial ink */
+	--ink-950: #07060d;
+	--ink-900: #0b0a14;
+	--ink-850: #100e1c;
+	--ink-800: #16142600;
+}
+
+@layer utilities {
+	/* Brand gradient text (Elixir purple → Cardano blue).
+	   Kept high-luminance so it reads as easily as the adjacent white text. */
+	.brand-text {
+		background: linear-gradient(
+			110deg,
+			#e7dbff 0%,
+			#c4a9ff 34%,
+			#a9b4ff 64%,
+			#9ccbff 100%
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.brand-bg {
+		background: linear-gradient(110deg, #7c3aed 0%, #5b46e0 50%, #2563eb 100%);
+	}
+
+	/* Mono uppercase section eyebrow */
+	.eyebrow {
+		font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+		text-transform: uppercase;
+		letter-spacing: 0.22em;
+		font-size: 0.72rem;
+		font-weight: 600;
+	}
+
+	/* Editorial page backdrop: near-black with a single soft brand aura + fine grid */
+	.editorial-bg {
+		background-color: var(--ink-950);
+		background-image:
+			radial-gradient(
+				60rem 60rem at 78% -8%,
+				rgba(124, 58, 237, 0.16) 0%,
+				transparent 55%
+			),
+			radial-gradient(
+				55rem 55rem at 8% 12%,
+				rgba(37, 99, 235, 0.12) 0%,
+				transparent 55%
+			);
+	}
+
+	.grid-overlay {
+		background-image:
+			linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+		background-size: 64px 64px;
+		mask-image: radial-gradient(circle at 50% 0%, black, transparent 78%);
+		-webkit-mask-image: radial-gradient(circle at 50% 0%, black, transparent 78%);
+	}
+
+	/* Refined surface card — thin border, quiet lift on hover */
+	.surface {
+		background: linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.035),
+			rgba(255, 255, 255, 0.012)
+		);
+		border: 1px solid rgba(148, 163, 184, 0.12);
+		backdrop-filter: blur(12px);
+		transition: border-color 0.35s ease, transform 0.35s ease,
+			box-shadow 0.35s ease;
+	}
+
+	.surface:hover {
+		border-color: rgba(168, 85, 247, 0.4);
+		transform: translateY(-3px);
+		box-shadow: 0 24px 48px -24px rgba(124, 58, 237, 0.5);
+	}
+
+	/* Hairline top accent used on feature/provider cards */
+	.hairline-top {
+		position: relative;
+	}
+	.hairline-top::after {
+		content: "";
+		position: absolute;
+		inset: 0 0 auto 0;
+		height: 1px;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(168, 85, 247, 0.6),
+			rgba(59, 130, 246, 0.6),
+			transparent
+		);
+		opacity: 0;
+		transition: opacity 0.35s ease;
+	}
+	.hairline-top:hover::after {
+		opacity: 1;
+	}
+
+	.brand-ring:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--ink-950), 0 0 0 4px rgba(168, 85, 247, 0.7);
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	.rise {
+		opacity: 0;
+		animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.rise {
+			animation: none !important;
+			opacity: 1 !important;
+			transform: none !important;
+		}
+		.surface:hover {
+			transform: none !important;
+		}
+	}
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;

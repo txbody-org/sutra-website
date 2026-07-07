@@ -64,20 +64,22 @@ end`;
 end`;
 
   return (
-    <section ref={ref} className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white mb-6 leading-tight tracking-tight">
+    <section
+      id="code"
+      ref={ref}
+      className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8"
+    >
+      <div className="max-w-6xl mx-auto">
+        <div className="max-w-2xl mb-14 sm:mb-16">
+          <p className="eyebrow brand-text mb-4">In practice</p>
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white leading-tight tracking-tight">
             Code that
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              {" "}
-              just works
-            </span>
+            <span className="brand-text"> reads like a sentence</span>.
           </h2>
-          <p className="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed font-body">
-            Write clean, readable code that your team will love. Elixir's
-            functional approach makes blockchain development predictable and
-            maintainable.
+          <p className="mt-5 text-base sm:text-lg text-slate-400 leading-relaxed font-body">
+            Build a transaction on the left, prove it works against a real network
+            on the right. Elixir's functional style keeps both predictable and
+            easy to review.
           </p>
         </div>
 
@@ -172,22 +174,22 @@ end`;
           </Card>
         </div>
 
-        <div className="mt-8 sm:mt-12 text-center">
-          <div className="animate-on-scroll scale-in flex flex-col sm:inline-flex sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 bg-slate-800/50 rounded-lg p-4 sm:p-5 border border-slate-700">
+        <div className="mt-8 sm:mt-12">
+          <div className="animate-on-scroll scale-in flex flex-col sm:inline-flex sm:flex-row items-center gap-4 sm:gap-6 surface rounded-xl p-4 sm:p-5">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+              <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
               <span className="text-slate-300 text-sm sm:text-base font-medium tracking-wide">
-                Multi-Chain SDK
+                Cardano-native
               </span>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+              <div className="w-2.5 h-2.5 bg-blue-400 rounded-full"></div>
               <span className="text-slate-300 font-mono text-sm sm:text-base">
                 BEAM Powered
               </span>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
+              <div className="w-2.5 h-2.5 bg-purple-400 rounded-full"></div>
               <span className="text-slate-300 text-sm sm:text-base font-medium tracking-wide">
                 Elixir Native
               </span>
