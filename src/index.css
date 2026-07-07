@@ -119,6 +119,12 @@
 		opacity: 1;
 	}
 
+	/* Disable programming ligatures (e.g. so "~>" in a version spec stays literal) */
+	.no-liga {
+		font-variant-ligatures: none;
+		font-feature-settings: "liga" 0, "calt" 0;
+	}
+
 	.brand-ring:focus-visible {
 		outline: none;
 		box-shadow: 0 0 0 2px var(--ink-950), 0 0 0 4px rgba(168, 85, 247, 0.7);

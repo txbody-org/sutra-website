@@ -3,6 +3,7 @@ import { Github, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 import { LINKS } from "@/lib/links";
+import SutraMark from "./SutraMark";
 
 const NAV_LINKS = [
   { label: "Features", href: "#features" },
@@ -38,9 +39,10 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <a href="#top" className="flex items-center gap-2.5 flex-shrink-0 group">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md brand-bg text-white font-display font-black text-sm shadow-lg shadow-purple-900/40">
-              S
-            </span>
+            <SutraMark
+              size={30}
+              className="shadow-lg shadow-purple-900/30 group-hover:scale-105 transition-transform duration-300"
+            />
             <span className="text-lg font-display font-extrabold tracking-tight text-white">
               Sutra
             </span>

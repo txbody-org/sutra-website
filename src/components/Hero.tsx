@@ -70,7 +70,7 @@ const Hero = () => {
               style={{ animationDelay: "0.35s" }}
             >
               <span className="text-purple-400 select-none">def&nbsp;deps&nbsp;→</span>
-              <code className="text-slate-200 flex-1 truncate">
+              <code className="text-slate-200 flex-1 truncate no-liga">
                 {INSTALL_SNIPPET}
               </code>
               <button

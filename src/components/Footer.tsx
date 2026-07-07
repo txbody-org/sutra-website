@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { LINKS, INSTALL_SNIPPET } from "@/lib/links";
+import SutraMark from "./SutraMark";
 
 const linkGroups = [
   {
@@ -55,7 +56,7 @@ const Footer = () => {
             {/* Install snippet */}
             <div className="mx-auto mb-8 flex items-center gap-3 rounded-xl border border-white/12 bg-black/40 px-4 py-3 max-w-md font-mono text-sm">
               <span className="text-purple-400 select-none">mix&nbsp;deps</span>
-              <code className="text-slate-200 flex-1 truncate text-left">
+              <code className="text-slate-200 flex-1 truncate text-left no-liga">
                 {INSTALL_SNIPPET}
               </code>
               <button
@@ -100,9 +101,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-md brand-bg text-white font-display font-black text-sm">
-                S
-              </span>
+              <SutraMark size={30} />
               <span className="text-lg font-display font-extrabold tracking-tight text-white">
                 Sutra
               </span>
